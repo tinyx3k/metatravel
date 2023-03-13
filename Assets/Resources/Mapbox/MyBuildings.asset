@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ade7ea2a146442b9575619cf724737, type: 3}
+  m_Name: MyBuildings
+  m_EditorClassIdentifier: 
+  Active: 1
+  features:
+  - Name: nhan-fixed
+    active: 1
+    prefab: {fileID: 7393376693856073950, guid: 71a090921ae3cb541bf181a68b3f89f7,
+      type: 3}
+    scaleDownWithWorld: 1
+    _prefabLocations:
+    - 13.082375, 109.301787
+    _explicitlyBlockedFeatureIds: []
+  - Name: nghinhphong-fixed
+    active: 1
+    prefab: {fileID: 4159975457375619667, guid: 62f9812cd32caba499f9a89b2127f41f,
+      type: 3}
+    scaleDownWithWorld: 1
+    _prefabLocations:
+    - 13.116321840569825, 109.30758050845277
+    _explicitlyBlockedFeatureIds: []
+  - Name: thanhluong-fixed
+    active: 1
+    prefab: {fileID: 5649291384664743751, guid: 3d9d72773127f844f98181d64ef4e74d,
+      type: 3}
+    scaleDownWithWorld: 1
+    _prefabLocations:
+    - 13.181068879599284, 109.29595177023629
+    _explicitlyBlockedFeatureIds: []
+  - Name: manglang-fixed
+    active: 1
+    prefab: {fileID: 3955853721002663542, guid: d111a403bca93094ead2edae801dd522,
+      type: 3}
+    scaleDownWithWorld: 1
+    _prefabLocations:
+    - 13.334141398359458, 109.22585248933831
+    _explicitlyBlockedFeatureIds: []
