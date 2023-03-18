@@ -9,6 +9,15 @@ namespace Core.Map
 {
     public class GameObjectCollectionSpawner : MonoBehaviour
     {
+        [Serializable]
+        public struct GameObjectMarker
+        {
+            public Vector3 rotation;
+            public Vector3 scale;
+            public GameObject prefab;
+            [Geocode]
+            public string locationString;
+        }
         [SerializeField] private AbstractMap map;
         [SerializeField] private List<GameObjectMarker> markerCollection;
 
