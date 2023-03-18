@@ -1,3 +1,19 @@
 fileFormatVersion: 2
 guid: 3916fcc2adcd4e07b405de3e723099b8
-timeCreated: 1675372037
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mainCamera: {instanceID: 0}
+  - secondCamera: {instanceID: 0}
+  - movingAction: {fileID: -4305131267875929410, guid: 28759fb9f9aa844469bc35cd7d9207b7,
+      type: 3}
+  - lookingAction: {fileID: -8938948367382693672, guid: 28759fb9f9aa844469bc35cd7d9207b7,
+      type: 3}
+  - switchCamera: {fileID: 7305766311139288199, guid: 28759fb9f9aa844469bc35cd7d9207b7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

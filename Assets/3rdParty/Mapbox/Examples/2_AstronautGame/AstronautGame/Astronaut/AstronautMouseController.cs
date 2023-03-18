@@ -5,219 +5,222 @@ using Mapbox.Unity.Map;
 
 namespace Mapbox.Examples
 {
-	public class AstronautMouseController : MonoBehaviour
-	{
-		[Header("Character")]
-		[SerializeField]
-		GameObject character;
-		[SerializeField]
-		float characterSpeed;
-		[SerializeField]
-		Animator characterAnimator;
+    public class AstronautMouseController : MonoBehaviour
+    {
+        [Header("Character")] [SerializeField] GameObject character;
+        [SerializeField] float characterSpeed;
+        [SerializeField] Animator characterAnimator;
 
-		[Header("References")]
-		[SerializeField]
-		AstronautDirections directions;
-		[SerializeField]
-		Transform startPoint;
-		[SerializeField]
-		Transform endPoint;
-		[SerializeField]
-		AbstractMap map;
-		[SerializeField]
-		GameObject rayPlane;
-		[SerializeField]
-		Transform _movementEndPoint;
+        [Header("References")] [SerializeField]
+        AstronautDirections directions;
 
-		[SerializeField]
-		LayerMask layerMask;
+        [SerializeField] Transform startPoint;
+        [SerializeField] Transform endPoint;
+        [SerializeField] AbstractMap map;
+        [SerializeField] GameObject rayPlane;
+        [SerializeField] Transform _movementEndPoint;
 
-		Ray ray;
-		RaycastHit hit;
-		LayerMask raycastPlane;
-		float clicktime;
-		bool moving;
-		bool characterDisabled;
+        [SerializeField] LayerMask layerMask;
 
-		void Start()
-		{
-			characterAnimator = GetComponentInChildren<Animator>();
-			if (!Application.isEditor)
-			{
-				this.enabled = false;
-				return;
-			}
-		}
+        Ray ray;
+        RaycastHit hit;
+        LayerMask raycastPlane;
+        float clicktime;
+        bool moving;
+        bool characterDisabled;
 
-		void Update()
-		{
-			if (characterDisabled)
-				return;
+        void Start()
+        {
+            characterAnimator = GetComponentInChildren<Animator>();
+            if (!Application.isEditor)
+            {
+                this.enabled = false;
+                return;
+            }
+        }
 
-			CamControl();
+        void Update()
+        {
+            if (characterDisabled)
+                return;
 
-			bool click = false;
+            CamControl();
 
-			if (Input.GetMouseButtonDown(0))
-			{
-				clicktime = Time.time;
-			}
-			if (Input.GetMouseButtonUp(0))
-			{
-				if (Time.time - clicktime < 0.15f)
-				{
-					click = true;
-				}
-			}
+            bool click = false;
 
-			if (click)
-			{
-				ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Input.GetMouseButtonDown(0))
+            {
+                clicktime = Time.time;
+            }
 
-				if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
-				{
-					startPoint.position = transform.localPosition;
-					endPoint.position = hit.point;
-					MovementEndpointControl(hit.point, true);
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (Time.time - clicktime < 0.15f)
+                {
+                    click = true;
+                }
+            }
 
-					directions.Query(GetPositions, startPoint, endPoint, map);
-				}
-			}
-		}
+            if (click)
+            {
+                ray = cam.ScreenPointToRay(Input.mousePosition);
 
-		#region Character : Movement
-		List<Vector3> futurePositions;
-		bool interruption;
-		void GetPositions(List<Vector3> vecs)
-		{
-			futurePositions = vecs;
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                {
+                    startPoint.position = transform.localPosition;
+                    endPoint.position = hit.point;
+                    MovementEndpointControl(hit.point, true);
 
-			if (futurePositions != null && moving)
-			{
-				interruption = true;
-			}
-			if (!moving)
-			{
-				interruption = false;
-				MoveToNextPlace();
-			}
-		}
+                    directions.Query(GetPositions, startPoint, endPoint, map);
+                }
+            }
+        }
 
-		Vector3 nextPos;
-		void MoveToNextPlace()
-		{
-			if (futurePositions.Count > 0)
-			{
-				nextPos = futurePositions[0];
-				futurePositions.Remove(nextPos);
+        #region Character : Movement
 
-				moving = true;
-				characterAnimator.SetBool("IsWalking", true);
-				StartCoroutine(MoveTo());
-			}
-			else if (futurePositions.Count <= 0)
-			{
-				moving = false;
-				characterAnimator.SetBool("IsWalking", false);
-			}
-		}
+        List<Vector3> futurePositions;
+        bool interruption;
 
-		Vector3 prevPos;
-		IEnumerator MoveTo()
-		{
-			prevPos = transform.localPosition;
+        void GetPositions(List<Vector3> vecs)
+        {
+            futurePositions = vecs;
 
-			float time = CalculateTime();
-			float t = 0;
+            if (futurePositions != null && moving)
+            {
+                interruption = true;
+            }
 
-			StartCoroutine(LookAtNextPos());
+            if (!moving)
+            {
+                interruption = false;
+                MoveToNextPlace();
+            }
+        }
 
-			while (t < 1 && !interruption)
-			{
-				t += Time.deltaTime / time;
+        Vector3 nextPos;
 
-				transform.localPosition = Vector3.Lerp(prevPos, nextPos, t);
+        void MoveToNextPlace()
+        {
+            if (futurePositions.Count > 0)
+            {
+                nextPos = futurePositions[0];
+                futurePositions.Remove(nextPos);
 
-				yield return null;
-			}
+                moving = true;
+                characterAnimator.SetBool("IsWalking", true);
+                StartCoroutine(MoveTo());
+            }
+            else if (futurePositions.Count <= 0)
+            {
+                moving = false;
+                characterAnimator.SetBool("IsWalking", false);
+            }
+        }
 
-			interruption = false;
-			MoveToNextPlace();
-		}
+        Vector3 prevPos;
 
-		float CalculateTime()
-		{
-			float timeToMove = 0;
+        IEnumerator MoveTo()
+        {
+            prevPos = transform.localPosition;
 
-			timeToMove = Vector3.Distance(prevPos, nextPos) / characterSpeed;
+            float time = CalculateTime();
+            float t = 0;
 
-			return timeToMove;
-		}
-		#endregion
+            StartCoroutine(LookAtNextPos());
 
-		#region Character : Rotation
-		IEnumerator LookAtNextPos()
-		{
-			Quaternion neededRotation = Quaternion.LookRotation(nextPos - character.transform.position);
-			Quaternion thisRotation = character.transform.localRotation;
+            while (t < 1 && !interruption)
+            {
+                t += Time.deltaTime / time;
 
-			float t = 0;
-			while (t < 1.0f)
-			{
-				t += Time.deltaTime / 0.25f;
-				var rotationValue = Quaternion.Slerp(thisRotation, neededRotation, t);
-				character.transform.rotation = Quaternion.Euler(0, rotationValue.eulerAngles.y, 0);
-				yield return null;
-			}
-		}
-		#endregion
+                transform.localPosition = Vector3.Lerp(prevPos, nextPos, t);
 
-		#region CameraControl
-		[Header("CameraSettings")]
-		[SerializeField]
-		Camera cam;
-		Vector3 previousPos = Vector3.zero;
-		Vector3 deltaPos = Vector3.zero;
+                yield return null;
+            }
 
-		void CamControl()
-		{
-			deltaPos = transform.position - previousPos;
-			deltaPos.y = 0;
-			cam.transform.position = Vector3.Lerp(cam.transform.position, cam.transform.position + deltaPos, Time.time);
-			previousPos = transform.position;
-		}
-		#endregion
+            interruption = false;
+            MoveToNextPlace();
+        }
 
-		#region Utility
-		public void DisableCharacter()
-		{
-			characterDisabled = true;
-			moving = false;
-			StopAllCoroutines();
-			character.SetActive(false);
-		}
+        float CalculateTime()
+        {
+            float timeToMove = 0;
 
-		public void EnableCharacter()
-		{
-			characterDisabled = false;
-			character.SetActive(true);
-		}
+            timeToMove = Vector3.Distance(prevPos, nextPos) / characterSpeed;
 
-		public void LayerChangeOn()
-		{
-			Debug.Log("OPEN");
-		}
+            return timeToMove;
+        }
 
-		public void LayerChangeOff()
-		{
-			Debug.Log("CLOSE");
-		}
+        #endregion
 
-		void MovementEndpointControl(Vector3 pos, bool active)
-		{
-			_movementEndPoint.position = new Vector3(pos.x, 0.2f, pos.z);
-			_movementEndPoint.gameObject.SetActive(active);
-		}
-		#endregion
-	}
+        #region Character : Rotation
+
+        IEnumerator LookAtNextPos()
+        {
+            Quaternion neededRotation = Quaternion.LookRotation(nextPos - character.transform.position);
+            Quaternion thisRotation = character.transform.localRotation;
+
+            float t = 0;
+            while (t < 1.0f)
+            {
+                t += Time.deltaTime / 0.25f;
+                var rotationValue = Quaternion.Slerp(thisRotation, neededRotation, t);
+                character.transform.rotation = Quaternion.Euler(0, rotationValue.eulerAngles.y, 0);
+                yield return null;
+            }
+        }
+
+        #endregion
+
+        #region CameraControl
+
+        [Header("CameraSettings")] [SerializeField]
+        Camera cam;
+
+        Vector3 previousPos = Vector3.zero;
+        Vector3 deltaPos = Vector3.zero;
+
+        void CamControl()
+        {
+            deltaPos = transform.position - previousPos;
+            deltaPos.y = 0;
+            cam.transform.position = Vector3.Lerp(cam.transform.position, cam.transform.position + deltaPos, Time.time);
+            previousPos = transform.position;
+        }
+
+        #endregion
+
+        #region Utility
+
+        public void DisableCharacter()
+        {
+            characterDisabled = true;
+            moving = false;
+            StopAllCoroutines();
+            character.SetActive(false);
+        }
+
+        public void EnableCharacter()
+        {
+            characterDisabled = false;
+            character.SetActive(true);
+        }
+
+        public void LayerChangeOn()
+        {
+            Debug.Log("OPEN");
+        }
+
+        public void LayerChangeOff()
+        {
+            Debug.Log("CLOSE");
+        }
+
+        void MovementEndpointControl(Vector3 pos, bool active)
+        {
+            _movementEndPoint.position = new Vector3(pos.x, 0.2f, pos.z);
+            _movementEndPoint.gameObject.SetActive(active);
+        }
+
+        #endregion
+    }
 }

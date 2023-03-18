@@ -2,7 +2,7 @@ using System;
 
 namespace Util
 {
-    public class Trigonometric
+    public static class Trigonometric
     {
         public static double DegreeToRadian(double deg)
         {
