@@ -5,7 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Main.unity
+    guid: f9c1676b6f015414680670d6263d3ec8
   - enabled: 1
-    path: Assets/Scenes/Locations/NhanTower/NhanTower.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Structures/NghinhPhong.unity
+    guid: 23a4a59d242f7e34685e9513dc6f0a00
+  - enabled: 1
+    path: Assets/Scenes/Structures/Nhan.unity
+    guid: 30adced6d9a5d0f40b88700eae3f339c
+  - enabled: 1
+    path: Assets/Scenes/Structures/MangLang.unity
+    guid: 64028542dda0301459059192a533d305
+  - enabled: 1
+    path: Assets/Scenes/Structures/ThanhLuong.unity
+    guid: 80e58b40f7367f44baebf617b2e54800
   m_configObjects: {}

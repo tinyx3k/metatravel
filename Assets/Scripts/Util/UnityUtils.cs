@@ -46,5 +46,56 @@ namespace Util
             return new Vector3(origin.x, (float)sinDis, (float)cosDis);
         }
         #endregion
+
+        #region UI
+        //------------Top-------------------
+        public static void TopLeftAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0, 1);
+            uiTransform.anchorMax = new Vector2(0, 1);
+        }
+        public static void TopMiddleAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0.5f, 1);
+            uiTransform.anchorMax = new Vector2(0.5f, 1);
+        }
+        public static void TopRightAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(1, 1);
+            uiTransform.anchorMax = new Vector2(1, 1);
+        }
+        //------------Middle-------------------
+        public static void MiddleLeftAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0, 0.5f);
+            uiTransform.anchorMax = new Vector2(0, 0.5f);
+        }
+        public static void MiddleAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            uiTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        }
+        public static void MiddleRightAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(1, 0.5f);
+            uiTransform.anchorMax = new Vector2(1, 0.5f);
+        }
+        //------------Bottom-------------------
+        public static void BottomLeftAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0, 0);
+            uiTransform.anchorMax = new Vector2(0, 0);
+        }
+        public static void BottomMiddleAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(0.5f, 0);
+            uiTransform.anchorMax = new Vector2(0.5f, 0);
+        }
+        public static void BottomRightAnchor(ref RectTransform uiTransform)
+        {
+            uiTransform.anchorMin = new Vector2(1, 0);
+            uiTransform.anchorMax = new Vector2(1, 0);
+        }
+        #endregion
     }
 }

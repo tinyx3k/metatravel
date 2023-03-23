@@ -215,6 +215,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Audio",
+            "id": "0f55747a-bbe6-4cd0-b7cf-7561d69cb4a1",
+            "actions": [
+                {
+                    "name": "Trigger",
+                    "type": "Button",
+                    "id": "ded3485d-bde1-48a4-bb0c-70b28fe73fda",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "769f75c5-9cb3-4526-a5a1-fe17fbccab52",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
